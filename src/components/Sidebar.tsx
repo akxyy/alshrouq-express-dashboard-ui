@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { User, Bell, CircleDot, Settings } from 'lucide-react';
 
@@ -14,7 +15,16 @@ const Sidebar = () => {
           <CircleDot className="w-5 h-5 text-gray-300" />
         </button>
         
-        {/* Moved existing icons down */}
+        <button className="w-10 h-10 bg-red-700 hover:bg-red-500 rounded-lg flex items-center justify-center transition-colors">
+          <Settings className="w-5 h-5 text-gray-300" />
+        </button>
+      </div>
+
+      {/* Spacer to push icons to bottom */}
+      <div className="flex-1"></div>
+
+      {/* User and notification icons at the bottom */}
+      <div className="flex flex-col space-y-4">
         <button className="w-10 h-10 bg-red-700 hover:bg-red-500 rounded-lg flex items-center justify-center transition-colors">
           <User className="w-5 h-5 text-gray-300" />
         </button>
@@ -22,11 +32,6 @@ const Sidebar = () => {
         <button className="w-10 h-10 bg-red-700 hover:bg-red-500 rounded-lg flex items-center justify-center transition-colors relative">
           <Bell className="w-5 h-5 text-gray-300" />
           <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
-        </button>
-        
-        {/* Additional icon below */}
-        <button className="w-10 h-10 bg-red-700 hover:bg-red-500 rounded-lg flex items-center justify-center transition-colors">
-          <Settings className="w-5 h-5 text-gray-300" />
         </button>
       </div>
     </div>
