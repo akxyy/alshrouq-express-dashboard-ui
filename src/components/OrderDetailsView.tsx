@@ -71,10 +71,15 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
           </div>
 
           {/* Order Header */}
-          <div className="flex items-center space-x-3">
-            <User className="w-6 h-6 text-gray-600" />
-            <div>
+          <div className="flex items-start space-x-3">
+            <User className="w-6 h-6 text-gray-600 mt-0.5" />
+            <div className="flex-1">
               <h3 className="font-medium text-gray-900">{order.name}</h3>
+              <div className="mt-1">
+                <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                  Pending Driver Acceptance
+                </span>
+              </div>
             </div>
           </div>
 
