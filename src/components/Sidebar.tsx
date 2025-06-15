@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { User, Bell, CircleDot, Settings } from 'lucide-react';
 
 const Sidebar = () => {
   return (
-    <div className="w-16 bg-gradient-to-b from-red-600 to-red-900 rounded-lg m-2 flex flex-col items-center py-6 space-y-6">
+    <div className="w-16 bg-gradient-to-b from-red-600 to-blue-800 rounded-lg m-2 flex flex-col items-center py-6 space-y-6">
       <div className="w-10 h-10 bg-red-800 rounded-full flex items-center justify-center">
         <span className="text-white font-bold text-sm">AE</span>
       </div>
