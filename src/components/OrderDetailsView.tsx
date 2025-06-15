@@ -38,25 +38,11 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
   ];
 
   return (
-    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white z-40 rounded-lg shadow-xl border w-[480px] max-h-[60vh] flex flex-col" ref={modalRef}>
+    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white z-40 rounded-lg shadow-xl border w-[520px] max-h-[60vh] flex flex-col" ref={modalRef}>
       {/* Content */}
       <div className="flex-1 p-4 overflow-y-auto">
         <div className="space-y-4">
-          {/* Order Header */}
-          <div className="flex items-center space-x-3">
-            <User className="w-6 h-6 text-gray-600" />
-            <div>
-              <h3 className="font-medium text-gray-900">{order.name}</h3>
-              <p className="text-sm text-gray-500">{order.id}</p>
-              <div className="mt-1">
-                <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
-                  Pending Driver Acceptance
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Status Steps - moved above delivery status */}
+          {/* Status Steps - moved to the very top */}
           <div className="bg-gray-50 rounded-lg p-4">
             <div className="relative">
               {/* Connecting Line Background */}
@@ -80,6 +66,20 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
                     </span>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Order Header */}
+          <div className="flex items-center space-x-3">
+            <User className="w-6 h-6 text-gray-600" />
+            <div>
+              <h3 className="font-medium text-gray-900">{order.name}</h3>
+              <p className="text-sm text-gray-500">{order.id}</p>
+              <div className="mt-1">
+                <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                  Pending Driver Acceptance
+                </span>
               </div>
             </div>
           </div>
