@@ -47,9 +47,9 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
   };
 
   return (
-    <div className="w-80 bg-white flex flex-col">
+    <div className="w-96 bg-white flex flex-col">
       {/* Header Section */}
-      <div className="bg-gray-50 p-4 m-6 rounded-xl">
+      <div className="p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-medium text-gray-900">Alshrouq TEST-02 -Unizah Test</h3>
           <Button 
