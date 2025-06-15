@@ -81,10 +81,13 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
           </div>
 
           {/* Delivery Status */}
-          <div className="bg-gray-50 rounded-lg p-3">
-            <div className="flex items-center justify-between">
+          <div className="bg-gray-50 rounded-lg p-3 relative">
+            {/* Vertical line positioned more to the left */}
+            <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-gray-300"></div>
+            
+            <div className="flex items-center justify-between pl-2">
               <div className="flex items-center space-x-4">
-                <div className="flex flex-col items-center space-y-3">
+                <div className="flex flex-col items-center space-y-3 relative z-10">
                   <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-black rounded-full"></div>
                 </div>
