@@ -1,5 +1,4 @@
 
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -102,11 +101,17 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
           {/* Map Section */}
           <div className="space-y-2">
             <Label className="text-sm font-medium text-gray-700">Location</Label>
-            <div className="h-48 bg-gradient-to-br from-blue-50 to-green-50 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
-              <div className="text-center text-gray-500">
-                <MapPin className="w-8 h-8 mx-auto mb-2" />
-                <p className="text-sm">Click to select location</p>
-              </div>
+            <div className="h-48 rounded-lg border border-gray-300 overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d233668.064285073!2d46.57304906640625!3d24.774264900000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f03890d489399%3A0xba974d1c98e79fd5!2sRiyadh%20Saudi%20Arabia!5e0!3m2!1sen!2s!4v1703123456789!5m2!1sen!2s"
+                width="100%"
+                height="100%"
+                className="border-0"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Location Map"
+              />
             </div>
           </div>
 
@@ -206,4 +211,3 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
 };
 
 export default NewOrderModal;
-
