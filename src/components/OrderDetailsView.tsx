@@ -46,39 +46,29 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
             </div>
 
             {/* Horizontal Status Steps */}
-            <div className="flex items-center justify-between relative">
-              {statusSteps.map((step, index) => (
-                <div key={step.name} className="flex flex-col items-center relative flex-1">
-                  {/* Connecting Line */}
-                  {index < statusSteps.length - 1 && (
-                    <div 
-                      className={`absolute top-3 left-1/2 w-full h-0.5 ${
-                        step.completed ? 'bg-green-500' : 'bg-gray-300'
-                      }`}
-                      style={{ 
-                        left: '50%',
-                        right: '-50%',
-                        width: 'calc(100% - 12px)',
-                        marginLeft: '6px'
-                      }}
-                    />
-                  )}
-                  
-                  {/* Circle */}
-                  <div className={`w-6 h-6 rounded-full border-2 relative z-10 bg-white ${
-                    step.completed 
-                      ? 'bg-green-500 border-green-500' 
-                      : 'border-gray-300'
-                  }`} />
-                  
-                  {/* Step Name */}
-                  <span className={`text-xs mt-2 text-center ${
-                    step.completed ? 'text-gray-900' : 'text-gray-500'
-                  }`} style={{ maxWidth: '60px', lineHeight: '1.2' }}>
-                    {step.name}
-                  </span>
-                </div>
-              ))}
+            <div className="relative">
+              {/* Connecting Line Background */}
+              <div className="absolute top-3 left-3 right-3 h-0.5 bg-gray-300"></div>
+              
+              <div className="flex justify-between items-start relative">
+                {statusSteps.map((step, index) => (
+                  <div key={step.name} className="flex flex-col items-center relative">
+                    {/* Circle */}
+                    <div className={`w-6 h-6 rounded-full border-2 relative z-10 bg-white ${
+                      step.completed 
+                        ? 'bg-green-500 border-green-500' 
+                        : 'border-gray-300'
+                    }`} />
+                    
+                    {/* Step Name */}
+                    <span className={`text-xs mt-2 text-center leading-tight ${
+                      step.completed ? 'text-gray-900' : 'text-gray-500'
+                    }`} style={{ maxWidth: '60px' }}>
+                      {step.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
