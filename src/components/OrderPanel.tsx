@@ -51,7 +51,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
       {/* Header Section */}
       <div className="bg-gray-50 p-4 m-6 rounded-xl">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-medium text-gray-900">On Demand ({orders.length})</h3>
+          <h3 className="font-medium text-gray-900">Alshrouq TEST-02 -Unizah Test</h3>
           <Button 
             onClick={onNewOrder}
             size="sm" 
