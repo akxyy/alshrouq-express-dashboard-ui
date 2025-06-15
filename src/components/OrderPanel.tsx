@@ -47,9 +47,9 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
   };
 
   return (
-    <div className="w-80 bg-gray-50 flex flex-col">
+    <div className="w-80 bg-white flex flex-col">
       {/* Header Section */}
-      <div className="bg-white p-4 border-b border-gray-200">
+      <div className="bg-gray-50 p-4 m-4 rounded-lg">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-900">
             KFC-1210 malaz (sittin) RDHC.
