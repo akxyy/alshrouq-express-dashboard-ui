@@ -10,12 +10,16 @@ const Index = () => {
     setIsAuthenticated(true);
   };
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+
   return (
     <div className="min-h-screen">
       {!isAuthenticated ? (
         <SignInPage onSignIn={handleSignIn} />
       ) : (
-        <Dashboard />
+        <Dashboard onLogout={handleLogout} />
       )}
     </div>
   );

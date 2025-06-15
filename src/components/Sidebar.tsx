@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
-import { User, Bell, CircleDot, Settings, ChevronRight } from 'lucide-react';
 
-const Sidebar = () => {
+import React, { useState } from 'react';
+import { User, Bell, CircleDot, Settings, ChevronRight, LogOut } from 'lucide-react';
+
+interface SidebarProps {
+  onLogout?: () => void;
+}
+
+const Sidebar = ({ onLogout }: SidebarProps) => {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
 
   const isAnyDropdownOpen = showUserDropdown || showNotificationDropdown;
+
+  const handleLogout = () => {
+    setShowUserDropdown(false);
+    if (onLogout) {
+      onLogout();
+    }
+  };
 
   return (
     <>
@@ -39,7 +51,7 @@ const Sidebar = () => {
         {/* Spacer to push icons to bottom */}
         <div className="flex-1"></div>
 
-        {/* User and notification icons at the bottom */}
+        {/* User, notification and logout icons at the bottom */}
         <div className="flex flex-col space-y-4">
           <button 
             className="w-10 h-10 flex items-center justify-center transition-colors hover:scale-110 relative"
@@ -63,11 +75,19 @@ const Sidebar = () => {
             <ChevronRight className="w-3 h-3 text-gray-300 absolute right-0" />
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
           </button>
+
+          <button 
+            className="w-10 h-10 flex items-center justify-center transition-colors hover:scale-110 hover:bg-red-700/20 rounded-lg"
+            onClick={handleLogout}
+            title="Logout"
+          >
+            <LogOut className="w-5 h-5 text-gray-300" />
+          </button>
         </div>
 
         {/* User Dropdown */}
         {showUserDropdown && (
-          <div className="absolute bottom-20 left-16 ml-2 w-40 bg-white rounded-lg shadow-lg border z-50">
+          <div className="absolute bottom-32 left-16 ml-2 w-40 bg-white rounded-lg shadow-lg border z-50">
             <div className="py-2">
               <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                 Profile
@@ -76,7 +96,10 @@ const Sidebar = () => {
                 Settings
               </button>
               <hr className="my-1" />
-              <button className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+              <button 
+                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                onClick={handleLogout}
+              >
                 Logout
               </button>
             </div>
