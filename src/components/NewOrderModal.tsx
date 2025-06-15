@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -64,12 +65,6 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-gray-200">
         <h2 className="text-xl font-semibold text-gray-900">On Demand Delivery</h2>
-        <button
-          onClick={onClose}
-          className="w-8 h-8 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-colors border border-red-300"
-        >
-          <X className="w-4 h-4 text-red-600" />
-        </button>
       </div>
 
       {/* Form */}
@@ -188,8 +183,15 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
             </div>
           )}
 
-          {/* Submit Button */}
-          <div className="flex justify-end pt-4">
+          {/* Submit Buttons */}
+          <div className="flex justify-end gap-4 pt-4">
+            <Button 
+              type="button"
+              onClick={onClose}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8"
+            >
+              Close
+            </Button>
             <Button 
               type="submit" 
               className="bg-blue-600 hover:bg-blue-700 text-white px-8"
@@ -204,3 +206,4 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
 };
 
 export default NewOrderModal;
+
