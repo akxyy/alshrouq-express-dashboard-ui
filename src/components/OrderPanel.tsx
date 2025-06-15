@@ -61,6 +61,11 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
             New
           </Button>
         </div>
+
+        {/* On Demand Title */}
+        <div className="mb-4">
+          <h4 className="font-medium text-gray-900">On Demand ({orders.length})</h4>
+        </div>
         
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
