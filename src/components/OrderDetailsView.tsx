@@ -38,7 +38,7 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
   ];
 
   return (
-    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white z-40 rounded-lg shadow-xl border w-96 max-h-[60vh] flex flex-col" ref={modalRef}>
+    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white z-40 rounded-lg shadow-xl border w-[480px] max-h-[60vh] flex flex-col" ref={modalRef}>
       {/* Content */}
       <div className="flex-1 p-4 overflow-y-auto">
         <div className="space-y-4">
@@ -56,21 +56,8 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
             </div>
           </div>
 
-          {/* Delivery Status */}
-          <div className="bg-gray-50 rounded-lg p-3">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                <Car className="w-4 h-4 text-gray-600" />
-              </div>
-              <div className="flex-1">
-                <p className="font-medium text-gray-900 text-sm">Delivery Status</p>
-                <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
-                  Pending Driver Acceptance
-                </span>
-              </div>
-            </div>
-
-            {/* Horizontal Status Steps */}
+          {/* Status Steps - moved above delivery status */}
+          <div className="bg-gray-50 rounded-lg p-4">
             <div className="relative">
               {/* Connecting Line Background */}
               <div className="absolute top-3 left-3 right-3 h-0.5 bg-gray-300"></div>
@@ -88,12 +75,29 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
                     {/* Step Name */}
                     <span className={`text-xs mt-2 text-center leading-tight ${
                       step.completed ? 'text-gray-900' : 'text-gray-500'
-                    }`} style={{ maxWidth: '60px' }}>
+                    }`} style={{ maxWidth: '70px' }}>
                       {step.name}
                     </span>
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* Delivery Status */}
+          <div className="bg-gray-50 rounded-lg p-3">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                  <Car className="w-4 h-4 text-gray-600" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900 text-sm">Delivery Status</p>
+                </div>
+              </div>
+              <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                Pending Driver Acceptance
+              </span>
             </div>
           </div>
 
