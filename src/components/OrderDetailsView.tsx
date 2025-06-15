@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { User, Car } from 'lucide-react';
 import { Order } from './Dashboard';
 
@@ -9,6 +9,24 @@ interface OrderDetailsViewProps {
 }
 
 const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (order) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [order, onClose]);
+
   if (!order) return null;
 
   const statusSteps = [
@@ -20,7 +38,7 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
   ];
 
   return (
-    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white z-40 rounded-lg shadow-xl border w-96 max-h-[60vh] flex flex-col">
+    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white z-40 rounded-lg shadow-xl border w-96 max-h-[60vh] flex flex-col" ref={modalRef}>
       {/* Content */}
       <div className="flex-1 p-4 overflow-y-auto">
         <div className="space-y-4">
