@@ -75,7 +75,6 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
             <User className="w-6 h-6 text-gray-600" />
             <div>
               <h3 className="font-medium text-gray-900">{order.name}</h3>
-              <p className="text-sm text-gray-500">{order.id}</p>
               <div className="mt-1">
                 <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
                   Pending Driver Acceptance
