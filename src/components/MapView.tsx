@@ -5,12 +5,6 @@ import { MapPin, Navigation, Clock } from 'lucide-react';
 const MapView = () => {
   return (
     <div className="h-full relative">
-      {/* Map Header */}
-      <div className="absolute top-4 left-4 z-[1000] bg-white rounded-lg shadow-lg p-3">
-        <h3 className="font-semibold text-gray-900 mb-1">Riyadh Operations Center</h3>
-        <p className="text-sm text-gray-600">Active Deliveries: 24</p>
-      </div>
-
       {/* Map Placeholder */}
       <div className="h-full w-full rounded-lg bg-gray-200 flex items-center justify-center">
         <div className="text-center">
