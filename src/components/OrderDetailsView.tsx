@@ -13,7 +13,6 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
 
   const statusSteps = [
     { name: 'Pending', completed: true },
-    { name: 'Driver Acceptance', completed: false },
     { name: 'Picked Up', completed: false },
     { name: 'In Transit', completed: false },
     { name: 'Delivered', completed: false },
@@ -22,8 +21,7 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
   return (
     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white z-40 rounded-lg shadow-xl border w-96 max-h-[60vh] flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-900">Order Details</h2>
+      <div className="flex items-center justify-end p-4 border-b border-gray-200">
         <button
           onClick={onClose}
           className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
@@ -107,9 +105,6 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
             </div>
             
             <div className="space-y-1 text-xs text-gray-600">
-              <p><span className="font-medium">Phone:</span> {order.phone}</p>
-              <p><span className="font-medium">Order Value:</span> {order.orderValue}</p>
-              <p><span className="font-medium">Payment:</span> {order.paymentMethod}</p>
               {order.customerAddress && (
                 <p><span className="font-medium">Address:</span> {order.customerAddress}</p>
               )}

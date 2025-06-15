@@ -115,8 +115,8 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
                       <div className={`absolute left-0 top-0 bottom-0 w-1 ${getOrderColor(index)}`}></div>
                       
                       <div className="p-3 pl-5">
-                        {section.name === 'Pending' ? (
-                          // Special layout for Pending orders
+                        {(section.name === 'Pending' || section.name === 'All') ? (
+                          // Simplified layout for Pending and All orders
                           <div className="flex items-start space-x-3">
                             <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
                               <User className="w-4 h-4 text-gray-600" />
