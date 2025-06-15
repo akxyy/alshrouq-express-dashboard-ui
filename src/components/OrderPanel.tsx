@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Order } from './Dashboard';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, ChevronDown } from 'lucide-react';
 
 interface OrderPanelProps {
   orders: Order[];
@@ -39,6 +39,11 @@ const OrderPanel = ({ orders, onNewOrder }: OrderPanelProps) => {
     { name: 'Driver at Dropoff', count: getOrdersByStatus('Driver at Dropoff').length },
     { name: 'Completed', count: getOrdersByStatus('Completed').length },
   ];
+
+  const getOrderColor = (index: number) => {
+    const colors = ['bg-red-500', 'bg-green-500', 'bg-blue-500', 'bg-orange-500', 'bg-purple-500'];
+    return colors[index % colors.length];
+  };
 
   return (
     <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
@@ -85,43 +90,46 @@ const OrderPanel = ({ orders, onNewOrder }: OrderPanelProps) => {
               <span className="font-medium text-gray-900">
                 {section.name} ({section.count})
               </span>
-              <span className={`transform transition-transform ${
-                expandedSections[section.name] ? 'rotate-180' : ''
-              }`}>
-                ^
-              </span>
+              <ChevronDown className={`w-4 h-4 transform transition-transform ${
+                expandedSections[section.name] ? 'rotate-0' : 'rotate-180'
+              }`} />
             </button>
             
             {expandedSections[section.name] && (
-              <div className="px-4 pb-4 space-y-2">
+              <div className="px-4 pb-4 space-y-3">
                 {getOrdersByStatus(section.name === 'All' ? undefined : section.name)
                   .filter(order => 
                     searchTerm === '' || 
                     order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     order.id.toLowerCase().includes(searchTerm.toLowerCase())
                   )
-                  .map((order) => (
+                  .map((order, index) => (
                     <div
                       key={order.id}
-                      className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden"
                     >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-sm text-gray-900">{order.id}</span>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                          order.status === 'Accepted' ? 'bg-blue-100 text-blue-800' :
-                          order.status === 'Driver at Pickup' ? 'bg-purple-100 text-purple-800' :
-                          order.status === 'Picked' ? 'bg-orange-100 text-orange-800' :
-                          order.status === 'Driver at Dropoff' ? 'bg-indigo-100 text-indigo-800' :
-                          order.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {order.status}
-                        </span>
+                      {/* Colored left border */}
+                      <div className={`absolute left-0 top-0 bottom-0 w-1 ${getOrderColor(index)}`}></div>
+                      
+                      <div className="p-3 pl-5">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium text-sm text-gray-900">{order.id}</span>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                            order.status === 'Accepted' ? 'bg-blue-100 text-blue-800' :
+                            order.status === 'Driver at Pickup' ? 'bg-purple-100 text-purple-800' :
+                            order.status === 'Picked' ? 'bg-orange-100 text-orange-800' :
+                            order.status === 'Driver at Dropoff' ? 'bg-indigo-100 text-indigo-800' :
+                            order.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                            'bg-gray-100 text-gray-800'
+                          }`}>
+                            {order.status}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-600 mb-1">{order.name}</p>
+                        <p className="text-xs text-gray-500">{order.phone}</p>
+                        <p className="text-xs text-gray-500">Value: {order.orderValue}</p>
                       </div>
-                      <p className="text-sm text-gray-600 mb-1">{order.name}</p>
-                      <p className="text-xs text-gray-500">{order.phone}</p>
-                      <p className="text-xs text-gray-500">Value: {order.orderValue}</p>
                     </div>
                   ))}
                 
