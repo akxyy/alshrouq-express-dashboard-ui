@@ -49,8 +49,8 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
   return (
     <div className="w-80 bg-white flex flex-col">
       {/* Header Section */}
-      <div className="bg-gray-50 p-4 m-4 rounded-lg">
-        <div className="flex items-center justify-between mb-4">
+      <div className="bg-gray-50 p-4 m-6 rounded-xl">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-gray-900">
             KFC-1210 malaz (sittin) RDHC.
           </h2>
@@ -83,7 +83,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
       {/* Status Sections */}
       <div className="flex-1 overflow-y-auto space-y-3 px-4">
         {statusSections.map((section) => (
-          <div key={section.name} className="bg-white rounded-lg shadow-sm">
+          <div key={section.name} className="bg-white rounded-lg shadow-sm border border-gray-100">
             <button
               onClick={() => toggleSection(section.name)}
               className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors rounded-lg"
@@ -108,7 +108,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
                     <div
                       key={order.id}
                       onClick={() => onOrderClick(order)}
-                      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden border border-gray-100"
+                      className="bg-white rounded-lg hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden"
                     >
                       {/* Colored left border */}
                       <div className={`absolute left-0 top-0 bottom-0 w-1 ${getOrderColor(index)}`}></div>
