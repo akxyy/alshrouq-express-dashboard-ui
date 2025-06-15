@@ -20,7 +20,7 @@ const CustomToast = ({ isVisible, onClose, orderId }: CustomToastProps) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-50">
+    <div className="fixed bottom-4 right-4 z-50">
       <div className="bg-black text-white p-4 rounded-lg shadow-lg max-w-sm">
         <div className="text-sm font-medium mb-1">New Order</div>
         <div className="text-xs text-gray-300">

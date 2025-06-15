@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Order } from './Dashboard';
-import { Plus, Search, ChevronDown } from 'lucide-react';
+import { Plus, Search, ChevronDown, User } from 'lucide-react';
 
 interface OrderPanelProps {
   orders: Order[];
@@ -115,23 +115,42 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
                       <div className={`absolute left-0 top-0 bottom-0 w-1 ${getOrderColor(index)}`}></div>
                       
                       <div className="p-3 pl-5">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium text-sm text-gray-900">{order.id}</span>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                            order.status === 'Accepted' ? 'bg-blue-100 text-blue-800' :
-                            order.status === 'Driver at Pickup' ? 'bg-purple-100 text-purple-800' :
-                            order.status === 'Picked' ? 'bg-orange-100 text-orange-800' :
-                            order.status === 'Driver at Dropoff' ? 'bg-indigo-100 text-indigo-800' :
-                            order.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                            'bg-gray-100 text-gray-800'
-                          }`}>
-                            {order.status}
-                          </span>
-                        </div>
-                        <p className="text-sm text-gray-600 mb-1">{order.name}</p>
-                        <p className="text-xs text-gray-500">{order.phone}</p>
-                        <p className="text-xs text-gray-500">Value: {order.orderValue}</p>
+                        {section.name === 'Pending' ? (
+                          // Special layout for Pending orders
+                          <div className="flex items-start space-x-3">
+                            <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                              <User className="w-4 h-4 text-gray-600" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-gray-900 mb-1">{order.name}</p>
+                              <p className="text-xs text-gray-600 mb-1">Alshrouq test 02</p>
+                              <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-red-500 text-white">
+                                Pending Driver Acceptance
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          // Default layout for other sections
+                          <>
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="font-medium text-sm text-gray-900">{order.id}</span>
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                                order.status === 'Accepted' ? 'bg-blue-100 text-blue-800' :
+                                order.status === 'Driver at Pickup' ? 'bg-purple-100 text-purple-800' :
+                                order.status === 'Picked' ? 'bg-orange-100 text-orange-800' :
+                                order.status === 'Driver at Dropoff' ? 'bg-indigo-100 text-indigo-800' :
+                                order.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                                'bg-gray-100 text-gray-800'
+                              }`}>
+                                {order.status}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-1">{order.name}</p>
+                            <p className="text-xs text-gray-500">{order.phone}</p>
+                            <p className="text-xs text-gray-500">Value: {order.orderValue}</p>
+                          </>
+                        )}
                       </div>
                     </div>
                   ))}
