@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Order } from './Dashboard';
-import { Plus, Search, ChevronUp } from 'lucide-react';
+import { Plus, Search, ChevronDown } from 'lucide-react';
 
 interface OrderPanelProps {
   orders: Order[];
@@ -47,9 +47,9 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
   };
 
   return (
-    <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
-      {/* Header */}
-      <div className="p-4 border-b border-gray-200">
+    <div className="w-80 bg-gray-50 flex flex-col">
+      {/* Header Section */}
+      <div className="bg-white p-4 border-b border-gray-200">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-900">
             KFC-1210 malaz (sittin) RDHC.
@@ -76,23 +76,23 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
       </div>
 
       {/* On Demand Section */}
-      <div className="p-4 border-b border-gray-200">
+      <div className="bg-white p-4 mb-4">
         <h3 className="font-medium text-gray-900">On Demand ({orders.length})</h3>
       </div>
 
       {/* Status Sections */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto space-y-3 px-4">
         {statusSections.map((section) => (
-          <div key={section.name} className="border-b border-gray-100">
+          <div key={section.name} className="bg-white rounded-lg shadow-sm">
             <button
               onClick={() => toggleSection(section.name)}
-              className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+              className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors rounded-lg"
             >
               <span className="font-medium text-gray-900">
                 {section.name} ({section.count})
               </span>
-              <ChevronUp className={`w-4 h-4 transform transition-transform ${
-                expandedSections[section.name] ? 'rotate-0' : 'rotate-180'
+              <ChevronDown className={`w-4 h-4 transform transition-transform ${
+                expandedSections[section.name] ? 'rotate-180' : 'rotate-0'
               }`} />
             </button>
             
@@ -108,7 +108,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
                     <div
                       key={order.id}
                       onClick={() => onOrderClick(order)}
-                      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden"
+                      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden border border-gray-100"
                     >
                       {/* Colored left border */}
                       <div className={`absolute left-0 top-0 bottom-0 w-1 ${getOrderColor(index)}`}></div>
