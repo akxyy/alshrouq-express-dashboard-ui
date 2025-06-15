@@ -42,7 +42,17 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
       {/* Content */}
       <div className="flex-1 p-4 overflow-y-auto">
         <div className="space-y-4">
-          {/* Status Steps - moved to the very top */}
+          {/* Profile Section */}
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+              <User className="w-5 h-5 text-gray-600" />
+            </div>
+            <div>
+              <p className="font-medium text-gray-900">John Driver</p>
+            </div>
+          </div>
+
+          {/* Status Steps */}
           <div className="bg-gray-50 rounded-lg p-4">
             <div className="relative">
               {/* Connecting Line Background */}
@@ -72,18 +82,18 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
 
           {/* Delivery Status */}
           <div className="bg-gray-50 rounded-lg p-3">
-            <div className="flex items-start justify-between">
-              <div className="flex items-start space-x-3">
-                <div className="flex flex-col items-center space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <div className="flex flex-col items-center space-y-3">
                   <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-black rounded-full"></div>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col space-y-3">
                   <p className="font-medium text-gray-900 text-sm">Unaizah 23</p>
-                  <p className="text-sm text-gray-600 mt-1">{order.name}</p>
+                  <p className="text-sm text-gray-600">{order.name}</p>
                 </div>
               </div>
-              <div className="flex flex-col items-end space-y-1">
+              <div className="flex flex-col items-end space-y-3">
                 <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
                   Pending Driver Acceptance
                 </span>
