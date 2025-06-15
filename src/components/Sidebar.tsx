@@ -15,11 +15,11 @@ const Sidebar = () => {
       {/* Applications icon at the top */}
       <div className="flex flex-col space-y-6">
         <button className="w-10 h-10 flex items-center justify-center transition-colors hover:scale-110">
-          <CircleDot className="w-6 h-6 text-gray-300" />
+          <CircleDot className="w-5 h-5 text-gray-300" />
         </button>
         
         <button className="w-10 h-10 flex items-center justify-center transition-colors hover:scale-110">
-          <Settings className="w-6 h-6 text-gray-300" />
+          <Settings className="w-5 h-5 text-gray-300" />
         </button>
       </div>
 
@@ -35,8 +35,8 @@ const Sidebar = () => {
             setShowNotificationDropdown(false);
           }}
         >
-          <User className="w-6 h-6 text-gray-300" />
-          <ChevronRight className="w-3 h-3 text-gray-300 absolute -right-1 -top-1" />
+          <User className="w-5 h-5 text-gray-300" />
+          <ChevronRight className="w-3 h-3 text-gray-300 absolute right-0" />
         </button>
         
         <button 
@@ -46,8 +46,8 @@ const Sidebar = () => {
             setShowUserDropdown(false);
           }}
         >
-          <Bell className="w-6 h-6 text-gray-300" />
-          <ChevronRight className="w-3 h-3 text-gray-300 absolute -right-1 -top-1" />
+          <Bell className="w-5 h-5 text-gray-300" />
+          <ChevronRight className="w-3 h-3 text-gray-300 absolute right-0" />
           <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
         </button>
       </div>
