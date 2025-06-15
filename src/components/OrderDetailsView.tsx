@@ -20,7 +20,7 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
   ];
 
   return (
-    <div className="absolute inset-0 bg-white z-40 flex flex-col">
+    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white z-40 rounded-lg shadow-xl border w-96 max-h-[60vh] flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
         <h2 className="text-lg font-semibold text-gray-900">Order Details</h2>
@@ -33,11 +33,11 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-6 overflow-y-auto">
-        <div className="max-w-2xl mx-auto space-y-6">
+      <div className="flex-1 p-4 overflow-y-auto">
+        <div className="space-y-4">
           {/* Order Header */}
           <div className="flex items-center space-x-3">
-            <User className="w-8 h-8 text-gray-600" />
+            <User className="w-6 h-6 text-gray-600" />
             <div>
               <h3 className="font-medium text-gray-900">{order.name}</h3>
               <p className="text-sm text-gray-500">{order.id}</p>
@@ -45,55 +45,50 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
           </div>
 
           {/* Delivery Status */}
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <Car className="w-5 h-5 text-gray-600" />
+          <div className="bg-gray-50 rounded-lg p-3">
+            <div className="flex items-center space-x-3 mb-3">
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <Car className="w-4 h-4 text-gray-600" />
               </div>
               <div className="flex-1">
-                <p className="font-medium text-gray-900">Delivery Status</p>
-                <p className="text-sm text-gray-500">Pending Driver Acceptance</p>
+                <p className="font-medium text-gray-900 text-sm">Delivery Status</p>
+                <p className="text-xs text-gray-500">Pending Driver Acceptance</p>
               </div>
             </div>
 
             {/* Status Steps */}
-            <div className="space-y-3">
+            <div className="space-y-2">
               {statusSteps.map((step, index) => (
-                <div key={step.name} className="flex items-center space-x-3">
-                  <div className={`w-4 h-4 rounded-full border-2 ${
+                <div key={step.name} className="flex items-center space-x-2">
+                  <div className={`w-3 h-3 rounded-full border-2 ${
                     step.completed 
                       ? 'bg-green-500 border-green-500' 
                       : 'border-gray-300'
                   }`} />
-                  <div className="flex-1 flex items-center justify-between">
-                    <span className={`text-sm ${
-                      step.completed ? 'text-gray-900' : 'text-gray-500'
-                    }`}>
-                      {step.name}
-                    </span>
-                    {index < statusSteps.length - 1 && (
-                      <div className="w-px h-6 bg-gray-300" />
-                    )}
-                  </div>
+                  <span className={`text-xs ${
+                    step.completed ? 'text-gray-900' : 'text-gray-500'
+                  }`}>
+                    {step.name}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Order Info */}
-          <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center space-x-3">
-                <User className="w-6 h-6 text-gray-600" />
-                <span className="font-medium text-gray-900">{order.name}</span>
-              </div>
+          <div className="bg-white border border-gray-200 rounded-lg p-3">
+            <div className="flex items-center justify-between mb-3">
               <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-black rounded-full" />
-                <span className="text-sm text-gray-500">Pending Driver Acceptance</span>
+                <User className="w-5 h-5 text-gray-600" />
+                <span className="font-medium text-gray-900 text-sm">{order.name}</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <div className="w-2 h-2 bg-black rounded-full" />
+                <span className="text-xs text-gray-500">Pending Driver Acceptance</span>
               </div>
             </div>
             
-            <div className="space-y-2 text-sm text-gray-600">
+            <div className="space-y-1 text-xs text-gray-600">
               <p><span className="font-medium">Phone:</span> {order.phone}</p>
               <p><span className="font-medium">Order Value:</span> {order.orderValue}</p>
               <p><span className="font-medium">Payment:</span> {order.paymentMethod}</p>

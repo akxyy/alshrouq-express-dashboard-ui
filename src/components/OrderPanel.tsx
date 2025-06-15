@@ -51,9 +51,6 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
       {/* Header Section */}
       <div className="bg-gray-50 p-4 m-6 rounded-xl">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-gray-900">
-            KFC-1210 malaz (sittin) RDHC.
-          </h2>
           <Button 
             onClick={onNewOrder}
             size="sm" 
