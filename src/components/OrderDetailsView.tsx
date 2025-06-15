@@ -48,6 +48,11 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
             <div>
               <h3 className="font-medium text-gray-900">{order.name}</h3>
               <p className="text-sm text-gray-500">{order.id}</p>
+              <div className="mt-1">
+                <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                  Pending Driver Acceptance
+                </span>
+              </div>
             </div>
           </div>
 
@@ -59,7 +64,9 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
               </div>
               <div className="flex-1">
                 <p className="font-medium text-gray-900 text-sm">Delivery Status</p>
-                <p className="text-xs text-gray-500">Pending Driver Acceptance</p>
+                <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                  Pending Driver Acceptance
+                </span>
               </div>
             </div>
 
@@ -87,26 +94,6 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-
-          {/* Order Info */}
-          <div className="bg-white border border-gray-200 rounded-lg p-3">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center space-x-2">
-                <User className="w-5 h-5 text-gray-600" />
-                <span className="font-medium text-gray-900 text-sm">{order.name}</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <div className="w-2 h-2 bg-black rounded-full" />
-                <span className="text-xs text-gray-500">Pending Driver Acceptance</span>
-              </div>
-            </div>
-            
-            <div className="space-y-1 text-xs text-gray-600">
-              {order.customerAddress && (
-                <p><span className="font-medium">Address:</span> {order.customerAddress}</p>
-              )}
             </div>
           </div>
 
