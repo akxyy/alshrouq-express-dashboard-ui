@@ -72,14 +72,24 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
 
           {/* Delivery Status */}
           <div className="bg-gray-50 rounded-lg p-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                  <Car className="w-4 h-4 text-gray-600" />
+            <div className="flex items-start justify-between">
+              <div className="flex items-start space-x-3">
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-black rounded-full"></div>
                 </div>
-                <div>
-                  <p className="font-medium text-gray-900 text-sm">Delivery Status</p>
+                <div className="flex flex-col">
+                  <p className="font-medium text-gray-900 text-sm">Unaizah 23</p>
+                  <p className="text-sm text-gray-600 mt-1">{order.name}</p>
                 </div>
+              </div>
+              <div className="flex flex-col items-end space-y-1">
+                <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                  Pending Driver Acceptance
+                </span>
+                <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                  Pending Driver Acceptance
+                </span>
               </div>
             </div>
           </div>
