@@ -31,14 +31,14 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
   };
 
   const statusSections = [
-    { name: 'All', count: orders.length },
-    { name: 'Pending', count: getOrdersByStatus('Pending').length },
-    { name: 'Auto Dispatch Failed', count: getOrdersByStatus('Auto Dispatch Failed').length },
-    { name: 'Accepted', count: getOrdersByStatus('Accepted').length },
-    { name: 'Driver at Pickup', count: getOrdersByStatus('Driver at Pickup').length },
-    { name: 'Picked', count: getOrdersByStatus('Picked').length },
-    { name: 'Driver at Dropoff', count: getOrdersByStatus('Driver at Dropoff').length },
-    { name: 'Completed', count: getOrdersByStatus('Completed').length },
+    { name: 'All', count: orders.length, color: 'bg-gray-500' },
+    { name: 'Pending', count: getOrdersByStatus('Pending').length, color: 'bg-yellow-500' },
+    { name: 'Auto Dispatch Failed', count: getOrdersByStatus('Auto Dispatch Failed').length, color: 'bg-red-500' },
+    { name: 'Accepted', count: getOrdersByStatus('Accepted').length, color: 'bg-blue-500' },
+    { name: 'Driver at Pickup', count: getOrdersByStatus('Driver at Pickup').length, color: 'bg-purple-500' },
+    { name: 'Picked', count: getOrdersByStatus('Picked').length, color: 'bg-orange-500' },
+    { name: 'Driver at Dropoff', count: getOrdersByStatus('Driver at Dropoff').length, color: 'bg-indigo-500' },
+    { name: 'Completed', count: getOrdersByStatus('Completed').length, color: 'bg-green-500' },
   ];
 
   const getOrderColor = (index: number) => {
@@ -61,11 +61,6 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
             New
           </Button>
         </div>
-
-        {/* On Demand Title */}
-        <div className="mb-4">
-          <h4 className="font-medium text-gray-900">On Demand ({orders.length})</h4>
-        </div>
         
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -76,15 +71,23 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
             className="pl-10"
           />
         </div>
+
+        {/* On Demand Title */}
+        <div className="mt-4">
+          <h4 className="font-medium text-gray-900">On Demand ({orders.length})</h4>
+        </div>
       </div>
 
       {/* Status Sections */}
-      <div className="flex-1 overflow-y-auto space-y-3 px-4">
+      <div className="flex-1 overflow-y-auto space-y-2 px-4">
         {statusSections.map((section) => (
-          <div key={section.name} className="bg-white rounded-lg shadow-sm border border-gray-100">
+          <div key={section.name} className="bg-white rounded-lg shadow-sm border border-gray-100 relative">
+            {/* Colored vertical line */}
+            <div className={`absolute left-0 top-0 bottom-0 w-1 ${section.color} rounded-l-lg`}></div>
+            
             <button
               onClick={() => toggleSection(section.name)}
-              className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors rounded-lg"
+              className="w-full p-3 text-left flex items-center justify-between hover:bg-gray-50 transition-colors rounded-lg pl-4"
             >
               <span className="font-medium text-gray-900">
                 {section.name} ({section.count})
@@ -95,7 +98,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
             </button>
             
             {expandedSections[section.name] && (
-              <div className="px-4 pb-4 space-y-3">
+              <div className="px-4 pb-3 space-y-2 pl-5">
                 {getOrdersByStatus(section.name === 'All' ? undefined : section.name)
                   .filter(order => 
                     searchTerm === '' || 
