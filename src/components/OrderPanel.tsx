@@ -3,14 +3,15 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Order } from './Dashboard';
-import { Plus, Search, ChevronDown } from 'lucide-react';
+import { Plus, Search, ChevronUp } from 'lucide-react';
 
 interface OrderPanelProps {
   orders: Order[];
   onNewOrder: () => void;
+  onOrderClick: (order: Order) => void;
 }
 
-const OrderPanel = ({ orders, onNewOrder }: OrderPanelProps) => {
+const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     'All': true,
@@ -90,7 +91,7 @@ const OrderPanel = ({ orders, onNewOrder }: OrderPanelProps) => {
               <span className="font-medium text-gray-900">
                 {section.name} ({section.count})
               </span>
-              <ChevronDown className={`w-4 h-4 transform transition-transform ${
+              <ChevronUp className={`w-4 h-4 transform transition-transform ${
                 expandedSections[section.name] ? 'rotate-0' : 'rotate-180'
               }`} />
             </button>
@@ -106,6 +107,7 @@ const OrderPanel = ({ orders, onNewOrder }: OrderPanelProps) => {
                   .map((order, index) => (
                     <div
                       key={order.id}
+                      onClick={() => onOrderClick(order)}
                       className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden"
                     >
                       {/* Colored left border */}

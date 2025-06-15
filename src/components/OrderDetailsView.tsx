@@ -1,0 +1,118 @@
+
+import React from 'react';
+import { X, User, Car } from 'lucide-react';
+import { Order } from './Dashboard';
+
+interface OrderDetailsViewProps {
+  order: Order | null;
+  onClose: () => void;
+}
+
+const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
+  if (!order) return null;
+
+  const statusSteps = [
+    { name: 'Pending', completed: true },
+    { name: 'Driver Acceptance', completed: false },
+    { name: 'Picked Up', completed: false },
+    { name: 'In Transit', completed: false },
+    { name: 'Delivered', completed: false },
+  ];
+
+  return (
+    <div className="absolute inset-0 bg-white z-40 flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <h2 className="text-lg font-semibold text-gray-900">Order Details</h2>
+        <button
+          onClick={onClose}
+          className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+        >
+          <X className="w-4 h-4 text-gray-600" />
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 p-6 overflow-y-auto">
+        <div className="max-w-2xl mx-auto space-y-6">
+          {/* Order Header */}
+          <div className="flex items-center space-x-3">
+            <User className="w-8 h-8 text-gray-600" />
+            <div>
+              <h3 className="font-medium text-gray-900">{order.name}</h3>
+              <p className="text-sm text-gray-500">{order.id}</p>
+            </div>
+          </div>
+
+          {/* Delivery Status */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                <Car className="w-5 h-5 text-gray-600" />
+              </div>
+              <div className="flex-1">
+                <p className="font-medium text-gray-900">Delivery Status</p>
+                <p className="text-sm text-gray-500">Pending Driver Acceptance</p>
+              </div>
+            </div>
+
+            {/* Status Steps */}
+            <div className="space-y-3">
+              {statusSteps.map((step, index) => (
+                <div key={step.name} className="flex items-center space-x-3">
+                  <div className={`w-4 h-4 rounded-full border-2 ${
+                    step.completed 
+                      ? 'bg-green-500 border-green-500' 
+                      : 'border-gray-300'
+                  }`} />
+                  <div className="flex-1 flex items-center justify-between">
+                    <span className={`text-sm ${
+                      step.completed ? 'text-gray-900' : 'text-gray-500'
+                    }`}>
+                      {step.name}
+                    </span>
+                    {index < statusSteps.length - 1 && (
+                      <div className="w-px h-6 bg-gray-300" />
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Order Info */}
+          <div className="bg-white border border-gray-200 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-3">
+                <User className="w-6 h-6 text-gray-600" />
+                <span className="font-medium text-gray-900">{order.name}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-black rounded-full" />
+                <span className="text-sm text-gray-500">Pending Driver Acceptance</span>
+              </div>
+            </div>
+            
+            <div className="space-y-2 text-sm text-gray-600">
+              <p><span className="font-medium">Phone:</span> {order.phone}</p>
+              <p><span className="font-medium">Order Value:</span> {order.orderValue}</p>
+              <p><span className="font-medium">Payment:</span> {order.paymentMethod}</p>
+              {order.customerAddress && (
+                <p><span className="font-medium">Address:</span> {order.customerAddress}</p>
+              )}
+            </div>
+          </div>
+
+          {/* See More */}
+          <div className="flex justify-center">
+            <button className="text-orange-500 text-sm font-medium hover:text-orange-600">
+              See more
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OrderDetailsView;

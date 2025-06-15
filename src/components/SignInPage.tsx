@@ -18,14 +18,14 @@ const SignInPage = ({ onSignIn }: SignInPageProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="flex min-h-[600px]">
           {/* Left Section */}
-          <div className="flex-1 bg-gradient-to-br from-gray-900 to-gray-800 p-12 flex items-center justify-center">
-            <div className="text-center text-white max-w-md">
+          <div className="flex-1 bg-white p-12 flex items-center justify-center">
+            <div className="text-center text-black max-w-md">
               <h1 className="text-4xl font-bold mb-6">Welcome to Alshrouq Express</h1>
-              <p className="text-lg text-gray-300 leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed">
                 Your trusted logistics partner delivering excellence across Saudi Arabia. 
                 We provide fast, reliable, and secure delivery services for businesses 
                 and individuals nationwide.

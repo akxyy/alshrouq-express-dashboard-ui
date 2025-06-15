@@ -4,7 +4,8 @@ import Sidebar from './Sidebar';
 import OrderPanel from './OrderPanel';
 import MapView from './MapView';
 import NewOrderModal from './NewOrderModal';
-import { useToast } from '@/hooks/use-toast';
+import CustomToast from './CustomToast';
+import OrderDetailsView from './OrderDetailsView';
 
 export interface Order {
   id: string;
@@ -21,7 +22,9 @@ export interface Order {
 const Dashboard = () => {
   const [isNewOrderModalOpen, setIsNewOrderModalOpen] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
-  const { toast } = useToast();
+  const [showToast, setShowToast] = useState(false);
+  const [toastOrderId, setToastOrderId] = useState('');
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const handleNewOrder = (orderData: Omit<Order, 'id' | 'status' | 'timestamp'>) => {
     const newOrder: Order = {
@@ -34,11 +37,13 @@ const Dashboard = () => {
     setOrders(prev => [newOrder, ...prev]);
     setIsNewOrderModalOpen(false);
     
-    toast({
-      title: "Order Created Successfully",
-      description: `New order created with ID: ${newOrder.id}`,
-      duration: 5000,
-    });
+    // Show custom toast
+    setToastOrderId(newOrder.id);
+    setShowToast(true);
+  };
+
+  const handleOrderClick = (order: Order) => {
+    setSelectedOrder(order);
   };
 
   return (
@@ -49,6 +54,7 @@ const Dashboard = () => {
         <OrderPanel 
           orders={orders}
           onNewOrder={() => setIsNewOrderModalOpen(true)}
+          onOrderClick={handleOrderClick}
         />
         
         <div className="flex-1 relative">
@@ -59,8 +65,19 @@ const Dashboard = () => {
             onClose={() => setIsNewOrderModalOpen(false)}
             onSubmit={handleNewOrder}
           />
+
+          <OrderDetailsView
+            order={selectedOrder}
+            onClose={() => setSelectedOrder(null)}
+          />
         </div>
       </div>
+
+      <CustomToast
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
+        orderId={toastOrderId}
+      />
     </div>
   );
 };
