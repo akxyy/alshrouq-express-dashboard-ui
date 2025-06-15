@@ -46,7 +46,7 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
 
           {/* Delivery Status */}
           <div className="bg-gray-50 rounded-lg p-3">
-            <div className="flex items-center space-x-3 mb-3">
+            <div className="flex items-center space-x-3 mb-4">
               <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
                 <Car className="w-4 h-4 text-gray-600" />
               </div>
@@ -56,18 +56,36 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
               </div>
             </div>
 
-            {/* Status Steps */}
-            <div className="space-y-2">
+            {/* Horizontal Status Steps */}
+            <div className="flex items-center justify-between relative">
               {statusSteps.map((step, index) => (
-                <div key={step.name} className="flex items-center space-x-2">
-                  <div className={`w-3 h-3 rounded-full border-2 ${
+                <div key={step.name} className="flex flex-col items-center relative flex-1">
+                  {/* Connecting Line */}
+                  {index < statusSteps.length - 1 && (
+                    <div 
+                      className={`absolute top-3 left-1/2 w-full h-0.5 ${
+                        step.completed ? 'bg-green-500' : 'bg-gray-300'
+                      }`}
+                      style={{ 
+                        left: '50%',
+                        right: '-50%',
+                        width: 'calc(100% - 12px)',
+                        marginLeft: '6px'
+                      }}
+                    />
+                  )}
+                  
+                  {/* Circle */}
+                  <div className={`w-6 h-6 rounded-full border-2 relative z-10 bg-white ${
                     step.completed 
                       ? 'bg-green-500 border-green-500' 
                       : 'border-gray-300'
                   }`} />
-                  <span className={`text-xs ${
+                  
+                  {/* Step Name */}
+                  <span className={`text-xs mt-2 text-center ${
                     step.completed ? 'text-gray-900' : 'text-gray-500'
-                  }`}>
+                  }`} style={{ maxWidth: '60px', lineHeight: '1.2' }}>
                     {step.name}
                   </span>
                 </div>
