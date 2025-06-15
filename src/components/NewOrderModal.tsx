@@ -16,6 +16,7 @@ interface NewOrderModalProps {
 
 const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
   const [formData, setFormData] = useState({
+    id: '', // New id field for manual entry
     name: '',
     phone: '',
     clientOrderId: '',
@@ -29,6 +30,7 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
     if (!formData.name || !formData.phone || !formData.paymentMethod) return;
 
     onSubmit({
+      // Only pass the custom id if needed, otherwise just use the dashboard's generator logic
       name: formData.name,
       phone: formData.phone,
       clientOrderId: formData.clientOrderId,
@@ -37,8 +39,8 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
       customerAddress: formData.paymentMethod === 'Cash' ? formData.customerAddress : undefined,
     });
 
-    // Reset form
     setFormData({
+      id: '',
       name: '',
       phone: '',
       clientOrderId: '',
@@ -113,32 +115,60 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="clientOrderId" className="text-sm font-medium text-gray-700">
-              Client Order ID
-            </Label>
-            <Input
-              id="clientOrderId"
-              placeholder="Enter client order ID"
-              value={formData.clientOrderId}
-              onChange={(e) => handleInputChange('clientOrderId', e.target.value)}
-            />
+          {/* Client Order ID and id in same row */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="clientOrderId" className="text-sm font-medium text-gray-700">
+                Client Order ID
+              </Label>
+              <Input
+                id="clientOrderId"
+                placeholder="Enter client order ID"
+                value={formData.clientOrderId}
+                onChange={(e) => handleInputChange('clientOrderId', e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="id" className="text-sm font-medium text-gray-700">
+                ID
+              </Label>
+              <Input
+                id="id"
+                placeholder="Enter order ID"
+                value={formData.id}
+                onChange={(e) => handleInputChange('id', e.target.value)}
+              />
+            </div>
           </div>
-
-          <div className="space-y-2">
-            <Label className="text-sm font-medium text-gray-700">
-              Payment Method *
-            </Label>
-            <Select onValueChange={(value) => handleInputChange('paymentMethod', value)} required>
-              <SelectTrigger>
-                <SelectValue placeholder="Select payment method" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Cash">Cash</SelectItem>
-                <SelectItem value="Span Machine">Span Machine</SelectItem>
-                <SelectItem value="Paid">Paid</SelectItem>
-              </SelectContent>
-            </Select>
+          
+          {/* Payment Method and Order Value in one row */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">
+                Payment Method *
+              </Label>
+              <Select onValueChange={(value) => handleInputChange('paymentMethod', value)} required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select payment method" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Cash">Cash</SelectItem>
+                  <SelectItem value="Span Machine">Span Machine</SelectItem>
+                  <SelectItem value="Paid">Paid</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="orderValue" className="text-sm font-medium text-gray-700">
+                Order Value
+              </Label>
+              <Input
+                id="orderValue"
+                placeholder="Enter order value"
+                value={formData.orderValue}
+                onChange={(e) => handleInputChange('orderValue', e.target.value)}
+              />
+            </div>
           </div>
 
           {/* Conditional Customer Address Field */}
@@ -174,3 +204,4 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
 };
 
 export default NewOrderModal;
+
