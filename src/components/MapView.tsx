@@ -1,84 +1,109 @@
 
 import React from 'react';
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import { MapPin, Navigation, Truck, Clock } from 'lucide-react';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+// Fix for default markers in react-leaflet
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 const MapView = () => {
+  // Riyadh coordinates
+  const center: [number, number] = [24.7136, 46.6753];
+  const hubPosition: [number, number] = [24.7136, 46.6753];
+  
   const deliveryPoints = [
-    { id: 1, name: 'Order #ABC123', lat: 24.7300, lng: 46.7200, status: 'pending', color: 'bg-yellow-500' },
-    { id: 2, name: 'Order #DEF456', lat: 24.6900, lng: 46.7500, status: 'in-transit', color: 'bg-green-500' },
-    { id: 3, name: 'Order #GHI789', lat: 24.7400, lng: 46.7600, status: 'delivered', color: 'bg-blue-500' },
+    { id: 1, name: 'Order #ABC123', position: [24.7300, 46.7200] as [number, number], status: 'pending', color: '#eab308' },
+    { id: 2, name: 'Order #DEF456', position: [24.6900, 46.7500] as [number, number], status: 'in-transit', color: '#22c55e' },
+    { id: 3, name: 'Order #GHI789', position: [24.7400, 46.7600] as [number, number], status: 'delivered', color: '#3b82f6' },
   ];
 
+  // Custom icons for different statuses
+  const createCustomIcon = (color: string) => {
+    return L.divIcon({
+      className: 'custom-div-icon',
+      html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+      iconSize: [20, 20],
+      iconAnchor: [10, 10]
+    });
+  };
+
+  const hubIcon = L.divIcon({
+    className: 'custom-div-icon',
+    html: '<div style="background-color: #dc2626; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;"><div style="width: 8px; height: 8px; background-color: white; border-radius: 50%;"></div></div>',
+    iconSize: [24, 24],
+    iconAnchor: [12, 12]
+  });
+
   return (
-    <div className="h-full relative bg-gradient-to-br from-blue-50 to-green-50">
+    <div className="h-full relative">
       {/* Map Header */}
-      <div className="absolute top-4 left-4 z-10 bg-white rounded-lg shadow-lg p-3">
+      <div className="absolute top-4 left-4 z-[1000] bg-white rounded-lg shadow-lg p-3">
         <h3 className="font-semibold text-gray-900 mb-1">Riyadh Operations Center</h3>
         <p className="text-sm text-gray-600">Active Deliveries: 24</p>
       </div>
 
-      {/* Mock Map Interface */}
-      <div className="w-full h-full flex items-center justify-center relative overflow-hidden">
-        {/* Background grid pattern to simulate map */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="grid grid-cols-20 grid-rows-20 h-full w-full">
-            {Array.from({ length: 400 }).map((_, i) => (
-              <div key={i} className="border border-gray-300"></div>
-            ))}
-          </div>
-        </div>
+      {/* Map Container */}
+      <MapContainer
+        center={center}
+        zoom={11}
+        className="h-full w-full rounded-lg"
+        zoomControl={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        
+        {/* Hub Marker */}
+        <Marker position={hubPosition} icon={hubIcon}>
+          <Popup>
+            <div className="text-center">
+              <strong>Distribution Hub</strong>
+              <br />
+              KFC-1210 malaz (sittin) RDHC
+            </div>
+          </Popup>
+        </Marker>
 
-        {/* Center Hub */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-            <Truck className="w-6 h-6 text-white" />
-          </div>
-          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-            <span className="text-xs font-medium bg-white px-2 py-1 rounded shadow">Hub</span>
-          </div>
-        </div>
-
-        {/* Delivery Points */}
-        {deliveryPoints.map((point, index) => (
-          <div
+        {/* Delivery Point Markers */}
+        {deliveryPoints.map((point) => (
+          <Marker
             key={point.id}
-            className={`absolute transform -translate-x-1/2 -translate-y-1/2`}
-            style={{
-              top: `${30 + index * 15}%`,
-              left: `${35 + index * 20}%`,
-            }}
+            position={point.position}
+            icon={createCustomIcon(point.color)}
           >
-            <div className={`w-8 h-8 ${point.color} rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-transform`}>
-              <MapPin className="w-4 h-4 text-white" />
-            </div>
-            <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-              <span className="text-xs font-medium bg-white px-2 py-1 rounded shadow">
-                {point.name}
-              </span>
-            </div>
-          </div>
+            <Popup>
+              <div>
+                <strong>{point.name}</strong>
+                <br />
+                Status: {point.status}
+              </div>
+            </Popup>
+          </Marker>
         ))}
 
-        {/* Connecting lines from hub to delivery points */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none">
-          {deliveryPoints.map((point, index) => (
-            <line
-              key={point.id}
-              x1="50%"
-              y1="50%"
-              x2={`${35 + index * 20}%`}
-              y2={`${30 + index * 15}%`}
-              stroke="#e5e7eb"
-              strokeWidth="2"
-              strokeDasharray="5,5"
-              opacity="0.5"
-            />
-          ))}
-        </svg>
-      </div>
+        {/* Routes from hub to delivery points */}
+        {deliveryPoints.map((point) => (
+          <Polyline
+            key={`route-${point.id}`}
+            positions={[hubPosition, point.position]}
+            color="#e5e7eb"
+            weight={2}
+            opacity={0.7}
+            dashArray="5, 10"
+          />
+        ))}
+      </MapContainer>
 
       {/* Map Controls */}
-      <div className="absolute top-4 right-4 flex flex-col space-y-2">
+      <div className="absolute top-4 right-4 flex flex-col space-y-2 z-[1000]">
         <button className="w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
           <Navigation className="w-5 h-5 text-gray-600" />
         </button>
@@ -88,7 +113,7 @@ const MapView = () => {
       </div>
 
       {/* Map Legend */}
-      <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-lg p-3">
+      <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-lg p-3 z-[1000]">
         <h4 className="font-medium text-gray-900 mb-2 text-sm">Legend</h4>
         <div className="space-y-1 text-xs">
           <div className="flex items-center space-x-2">
@@ -111,7 +136,7 @@ const MapView = () => {
       </div>
 
       {/* Real-time Stats */}
-      <div className="absolute bottom-4 right-4 bg-white rounded-lg shadow-lg p-3">
+      <div className="absolute bottom-4 right-4 bg-white rounded-lg shadow-lg p-3 z-[1000]">
         <h4 className="font-medium text-gray-900 mb-2 text-sm">Live Stats</h4>
         <div className="space-y-1 text-xs">
           <div className="flex justify-between space-x-4">
