@@ -14,7 +14,7 @@ export interface Order {
   orderValue: string;
   paymentMethod: 'Cash' | 'Span Machine' | 'Paid';
   customerAddress?: string;
-  status: 'Pending' | 'Manual Dispatch' | 'Accepted' | 'In Transit' | 'Delivered';
+  status: 'Pending' | 'Auto Dispatch Failed' | 'Accepted' | 'Driver at Pickup' | 'Picked' | 'Driver at Dropoff' | 'Completed';
   timestamp: Date;
 }
 

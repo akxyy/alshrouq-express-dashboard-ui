@@ -32,10 +32,12 @@ const OrderPanel = ({ orders, onNewOrder }: OrderPanelProps) => {
   const statusSections = [
     { name: 'All', count: orders.length },
     { name: 'Pending', count: getOrdersByStatus('Pending').length },
-    { name: 'Manual Dispatch', count: getOrdersByStatus('Manual Dispatch').length },
+    { name: 'Auto Dispatch Failed', count: getOrdersByStatus('Auto Dispatch Failed').length },
     { name: 'Accepted', count: getOrdersByStatus('Accepted').length },
-    { name: 'In Transit', count: getOrdersByStatus('In Transit').length },
-    { name: 'Delivered', count: getOrdersByStatus('Delivered').length },
+    { name: 'Driver at Pickup', count: getOrdersByStatus('Driver at Pickup').length },
+    { name: 'Picked', count: getOrdersByStatus('Picked').length },
+    { name: 'Driver at Dropoff', count: getOrdersByStatus('Driver at Dropoff').length },
+    { name: 'Completed', count: getOrdersByStatus('Completed').length },
   ];
 
   return (
@@ -108,8 +110,10 @@ const OrderPanel = ({ orders, onNewOrder }: OrderPanelProps) => {
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                           order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
                           order.status === 'Accepted' ? 'bg-blue-100 text-blue-800' :
-                          order.status === 'In Transit' ? 'bg-purple-100 text-purple-800' :
-                          order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
+                          order.status === 'Driver at Pickup' ? 'bg-purple-100 text-purple-800' :
+                          order.status === 'Picked' ? 'bg-orange-100 text-orange-800' :
+                          order.status === 'Driver at Dropoff' ? 'bg-indigo-100 text-indigo-800' :
+                          order.status === 'Completed' ? 'bg-green-100 text-green-800' :
                           'bg-gray-100 text-gray-800'
                         }`}>
                           {order.status}

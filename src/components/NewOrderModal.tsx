@@ -58,51 +58,54 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-end pr-8 z-50">
-      <div className="w-96 bg-white rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">On Demand Delivery</h2>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
-          >
-            <X className="w-4 h-4 text-gray-600" />
-          </button>
-        </div>
+    <div className="absolute inset-0 bg-white z-50 flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between p-6 border-b border-gray-200">
+        <h2 className="text-xl font-semibold text-gray-900">On Demand Delivery</h2>
+        <button
+          onClick={onClose}
+          className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+        >
+          <X className="w-4 h-4 text-gray-600" />
+        </button>
+      </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name" className="text-sm font-medium text-gray-700">
-              Customer Name *
-            </Label>
-            <Input
-              id="name"
-              placeholder="Enter customer name"
-              value={formData.name}
-              onChange={(e) => handleInputChange('name', e.target.value)}
-              required
-            />
+      {/* Form */}
+      <div className="flex-1 p-6 overflow-y-auto">
+        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-6">
+          {/* Name and Phone in same row */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-sm font-medium text-gray-700">
+                Customer Name *
+              </Label>
+              <Input
+                id="name"
+                placeholder="Enter customer name"
+                value={formData.name}
+                onChange={(e) => handleInputChange('name', e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
+                Phone Number *
+              </Label>
+              <Input
+                id="phone"
+                placeholder="Enter phone number"
+                value={formData.phone}
+                onChange={(e) => handleInputChange('phone', e.target.value)}
+                required
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
-              Phone Number *
-            </Label>
-            <Input
-              id="phone"
-              placeholder="Enter phone number"
-              value={formData.phone}
-              onChange={(e) => handleInputChange('phone', e.target.value)}
-              required
-            />
-          </div>
-
-          {/* Mini Map Placeholder */}
+          {/* Map Section */}
           <div className="space-y-2">
             <Label className="text-sm font-medium text-gray-700">Location</Label>
-            <div className="h-32 bg-gradient-to-br from-blue-50 to-green-50 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
+            <div className="h-48 bg-gradient-to-br from-blue-50 to-green-50 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
               <div className="text-center text-gray-500">
                 <MapPin className="w-8 h-8 mx-auto mb-2" />
                 <p className="text-sm">Click to select location</p>
@@ -119,18 +122,6 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
               placeholder="Enter client order ID"
               value={formData.clientOrderId}
               onChange={(e) => handleInputChange('clientOrderId', e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="orderValue" className="text-sm font-medium text-gray-700">
-              Order Value (SAR)
-            </Label>
-            <Input
-              id="orderValue"
-              placeholder="Enter order value"
-              value={formData.orderValue}
-              onChange={(e) => handleInputChange('orderValue', e.target.value)}
             />
           </div>
 
@@ -171,9 +162,9 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
           <div className="flex justify-end pt-4">
             <Button 
               type="submit" 
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8"
             >
-              Save Order
+              Save
             </Button>
           </div>
         </form>
