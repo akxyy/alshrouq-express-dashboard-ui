@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, User, Car } from 'lucide-react';
+import { User, Car } from 'lucide-react';
 import { Order } from './Dashboard';
 
 interface OrderDetailsViewProps {
@@ -12,24 +12,15 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
   if (!order) return null;
 
   const statusSteps = [
-    { name: 'Pending', completed: true },
-    { name: 'Picked Up', completed: false },
-    { name: 'In Transit', completed: false },
-    { name: 'Delivered', completed: false },
+    { name: 'Order Accepted', completed: true },
+    { name: 'Assigned', completed: false },
+    { name: 'Accepted', completed: false },
+    { name: 'Operation at Pickup', completed: false },
+    { name: 'Picked', completed: false },
   ];
 
   return (
     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white z-40 rounded-lg shadow-xl border w-96 max-h-[60vh] flex flex-col">
-      {/* Header */}
-      <div className="flex items-center justify-end p-4 border-b border-gray-200">
-        <button
-          onClick={onClose}
-          className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
-        >
-          <X className="w-4 h-4 text-gray-600" />
-        </button>
-      </div>
-
       {/* Content */}
       <div className="flex-1 p-4 overflow-y-auto">
         <div className="space-y-4">
