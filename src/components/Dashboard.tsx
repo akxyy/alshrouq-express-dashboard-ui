@@ -1,54 +1,83 @@
+
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import OrderPanel from './OrderPanel';
 import MapView from './MapView';
+import NewOrderModal from './NewOrderModal';
+import CustomToast from './CustomToast';
 import OrderDetailsView from './OrderDetailsView';
 
 export interface Order {
   id: string;
   name: string;
-  status: 'pending' | 'accepted' | 'in_progress' | 'completed';
-  time: string;
-  location: string;
-  driver?: string;
+  phone: string;
+  clientOrderId: string;
+  orderValue: string;
+  paymentMethod: 'Cash' | 'Span Machine' | 'Paid';
+  customerAddress?: string;
+  status: 'Pending' | 'Auto Dispatch Failed' | 'Accepted' | 'Driver at Pickup' | 'Picked' | 'Driver at Dropoff' | 'Completed';
+  timestamp: Date;
 }
 
-interface DashboardProps {
-  onLogout: () => void;
-}
-
-const Dashboard = ({ onLogout }: DashboardProps) => {
-  const [orders, setOrders] = useState<Order[]>([
-    { id: '1', name: 'Order 1', status: 'pending', time: '10:00 AM', location: 'Riyadh' },
-    { id: '2', name: 'Order 2', status: 'accepted', time: '11:00 AM', location: 'Jeddah' },
-    { id: '3', name: 'Order 3', status: 'in_progress', time: '12:00 PM', location: 'Dammam' },
-  ]);
+const Dashboard = () => {
+  const [isNewOrderModalOpen, setIsNewOrderModalOpen] = useState(false);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [showToast, setShowToast] = useState(false);
+  const [toastOrderId, setToastOrderId] = useState('');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
-  const handleNewOrder = (newOrder: Order) => {
-    setOrders([...orders, newOrder]);
+  const handleNewOrder = (orderData: Omit<Order, 'id' | 'status' | 'timestamp'>) => {
+    const newOrder: Order = {
+      ...orderData,
+      id: `#${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
+      status: 'Pending',
+      timestamp: new Date(),
+    };
+
+    setOrders(prev => [newOrder, ...prev]);
+    setIsNewOrderModalOpen(false);
+    
+    // Show custom toast
+    setToastOrderId(newOrder.id);
+    setShowToast(true);
+  };
+
+  const handleOrderClick = (order: Order) => {
+    setSelectedOrder(order);
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar onLogout={onLogout} />
+      <Sidebar />
       
       <div className="flex-1 flex">
         <OrderPanel 
           orders={orders}
-          selectedOrder={selectedOrder}
-          onOrderSelect={setSelectedOrder}
-          onNewOrder={handleNewOrder}
+          onNewOrder={() => setIsNewOrderModalOpen(true)}
+          onOrderClick={handleOrderClick}
         />
         
-        <div className="flex-1 p-4 relative">
+        <div className="flex-1 relative">
           <MapView />
-          <OrderDetailsView 
-            order={selectedOrder} 
-            onClose={() => setSelectedOrder(null)} 
+          
+          <NewOrderModal
+            isOpen={isNewOrderModalOpen}
+            onClose={() => setIsNewOrderModalOpen(false)}
+            onSubmit={handleNewOrder}
+          />
+
+          <OrderDetailsView
+            order={selectedOrder}
+            onClose={() => setSelectedOrder(null)}
           />
         </div>
       </div>
+
+      <CustomToast
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
+        orderId={toastOrderId}
+      />
     </div>
   );
 };
