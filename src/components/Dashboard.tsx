@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import OrderPanel from './OrderPanel';
@@ -19,7 +18,11 @@ export interface Order {
   timestamp: Date;
 }
 
-const Dashboard = () => {
+interface DashboardProps {
+  onLogout?: () => void;
+}
+
+const Dashboard = ({ onLogout }: DashboardProps) => {
   const [isNewOrderModalOpen, setIsNewOrderModalOpen] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
   const [showToast, setShowToast] = useState(false);
@@ -52,7 +55,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar />
+      <Sidebar onLogout={onLogout} />
       
       <div className="flex-1 flex">
         <OrderPanel 

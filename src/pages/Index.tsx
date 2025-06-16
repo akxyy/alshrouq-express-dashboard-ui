@@ -19,7 +19,7 @@ const Index = () => {
       {!isAuthenticated ? (
         <SignInPage onSignIn={handleSignIn} />
       ) : (
-        <Dashboard />
+        <Dashboard onLogout={handleLogout} />
       )}
     </div>
   );
