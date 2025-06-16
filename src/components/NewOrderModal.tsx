@@ -69,6 +69,11 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
       {/* Form */}
       <div className="flex-1 p-6 overflow-y-auto">
         <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-6">
+          {/* Title */}
+          <div className="text-center mb-6">
+            <h3 className="text-lg font-medium text-gray-900">Alshrouq TEST-02 -Unizah Test</h3>
+          </div>
+
           {/* Name and Phone in same row */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -134,7 +139,7 @@ const NewOrderModal = ({ isOpen, onClose, onSubmit }: NewOrderModalProps) => {
               </Label>
               <Input
                 id="id"
-                placeholder="Enter order ID"
+                placeholder="enter id"
                 value={formData.id}
                 onChange={(e) => handleInputChange('id', e.target.value)}
               />

@@ -26,17 +26,8 @@ const SignInPage = ({ onSignIn }: SignInPageProps) => {
             <div className="text-center text-black max-w-md">
               <h1 className="text-4xl font-bold mb-6">Welcome to Alshrouq Express</h1>
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                Your trusted logistics partner delivering excellence across Saudi Arabia. 
-                We provide fast, reliable, and secure delivery services for businesses 
-                and individuals nationwide.
+                AlshrouqExpress miles ahead ready to optimize your business logistics? explore our smart solutions in Saudi Arabia.serving a diverse clientele,including thousands of restaurant chanins,retaiers, and e-commerce platforms.with a track record of nearly 20million annual deliveries nationwide.
               </p>
-              
-              {/* Sample Credentials */}
-              <div className="bg-gray-50 p-4 rounded-lg text-left">
-                <p className="text-sm font-medium text-gray-700 mb-2">Demo Credentials:</p>
-                <p className="text-sm text-gray-600">Email: admin@alshrouq.com</p>
-                <p className="text-sm text-gray-600">Password: admin123</p>
-              </div>
             </div>
           </div>
 
