@@ -24,9 +24,9 @@ const SignInPage = ({ onSignIn }: SignInPageProps) => {
           {/* Left Section */}
           <div className="flex-1 bg-white p-12 flex items-center justify-center">
             <div className="text-center text-black max-w-md">
-              <h1 className="text-4xl font-bold mb-6">Welcome to Alshrouq Express</h1>
+              <h1 className="text-4xl font-bold mb-6">Noon Minutes</h1>
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                AlshrouqExpress miles ahead ready to optimize your business logistics? explore our smart solutions in Saudi Arabia.serving a diverse clientele,including thousands of restaurant chanins,retaiers, and e-commerce platforms.with a track record of nearly 20million annual deliveries nationwide.
+                Ready to optimize your business logistics? explore our smart solutions in Saudi Arabia.serving a diverse clientele,including thousands of restaurant chanins,retaiers, and e-commerce platforms.with a track record of nearly 20million annual deliveries nationwide.
               </p>
             </div>
           </div>
@@ -95,7 +95,7 @@ const SignInPage = ({ onSignIn }: SignInPageProps) => {
               <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-xs">AE</span>
               </div>
-              <span className="font-medium text-gray-900">Alshrouq Express</span>
+              <span className="font-medium text-gray-900">Noon Minutes</span>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import OrderPanel from './OrderPanel';
-import MapView from './MapView';
+// import MapView from './MapView';
 import NewOrderModal from './NewOrderModal';
 import CustomToast from './CustomToast';
 import OrderDetailsView from './OrderDetailsView';
@@ -66,7 +66,7 @@ const Dashboard = ({ onLogout }: DashboardProps) => {
         />
         
         <div className="flex-1 relative">
-          <MapView />
+          {/* <MapView /> */}
           
           <NewOrderModal
             isOpen={isNewOrderModalOpen}

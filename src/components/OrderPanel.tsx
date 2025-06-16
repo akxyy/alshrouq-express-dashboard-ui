@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,7 +18,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 
 interface OrderPanelProps {
@@ -45,8 +43,36 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
     }));
   };
 
+  const previousOrders = [
+    {
+      id: 'PREV001',
+      name: 'Ahmed Al Saeed',
+      phone: '+966 55 123 4567',
+      location: 'Riyadh, Saudi Arabia',
+      clientOrderId: 'CL-7890',
+      paymentMethod: 'Cash',
+      orderValue: 'SAR 120.00',
+    },
+    {
+      id: 'PREV002',
+      name: 'Fatimah Al Zahrani',
+      phone: '+966 55 987 6543',
+      location: 'Jeddah, Saudi Arabia',
+      clientOrderId: 'CL-3456',
+      paymentMethod: 'Card',
+      orderValue: 'SAR 85.00',
+    }
+  ];
+
+  const isDriverAccepted = (order: Order): boolean => {
+    return order.status === 'Accepted'
+  };
+
   const getOrdersByStatus = (status?: string) => {
     if (!status || status === 'All') return orders;
+    if (status === 'Accepted') {
+      return orders.filter(order => isDriverAccepted(order));
+    }
     return orders.filter(order => order.status === status);
   };
 
@@ -57,7 +83,6 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
 
   const confirmCancelOrder = () => {
     if (orderToCancel) {
-      console.log('Order cancelled:', orderToCancel);
       onRemoveOrder(orderToCancel);
       setIsDialogOpen(false);
       setOrderToCancel(null);
@@ -66,7 +91,6 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
 
   const handleLogOrder = (orderId: string) => {
     console.log('View log for order:', orderId);
-    // Add your log viewing logic here
   };
 
   const getOrderColor = (index: number) => {
@@ -87,20 +111,18 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
 
   return (
     <div className="w-96 bg-white flex flex-col">
-      {/* Header Section */}
       <div className="p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-medium text-gray-900">Alshrouq TEST-02 -Unizah Test</h3>
-          <Button 
+          <h3 className="font-medium text-gray-900">Noon Minutes</h3>
+          <Button
             onClick={onNewOrder}
-            size="sm" 
+            size="sm"
             className="bg-red-600 hover:bg-red-700 text-white"
           >
             <Plus className="w-4 h-4 mr-1" />
             New
           </Button>
         </div>
-        
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
           <Input
@@ -110,20 +132,15 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
             className="pl-10"
           />
         </div>
-
-        {/* On Demand Title */}
         <div className="mt-4">
           <h4 className="font-medium text-gray-900">On Demand ({orders.length})</h4>
         </div>
       </div>
 
-      {/* Status Sections */}
       <div className="flex-1 overflow-y-auto space-y-2 px-4">
         {statusSections.map((section) => (
           <div key={section.name} className="bg-white rounded-lg shadow-sm border border-gray-100 relative">
-            {/* Colored vertical line */}
             <div className={`absolute left-0 top-0 bottom-0 w-1 ${section.color} rounded-l-lg`}></div>
-            
             <button
               onClick={() => toggleSection(section.name)}
               className="w-full p-3 text-left flex items-center justify-between hover:bg-gray-50 transition-colors rounded-lg pl-4"
@@ -131,16 +148,14 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
               <span className="font-medium text-gray-900">
                 {section.name} ({section.count})
               </span>
-              <ChevronDown className={`w-4 h-4 transform transition-transform ${
-                expandedSections[section.name] ? 'rotate-180' : 'rotate-0'
-              }`} />
+              <ChevronDown className={`w-4 h-4 transform transition-transform ${expandedSections[section.name] ? 'rotate-180' : 'rotate-0'}`} />
             </button>
-            
+
             {expandedSections[section.name] && (
               <div className="px-4 pb-3 space-y-2 pl-5">
                 {getOrdersByStatus(section.name === 'All' ? undefined : section.name)
-                  .filter(order => 
-                    searchTerm === '' || 
+                  .filter(order =>
+                    searchTerm === '' ||
                     order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     order.id.toLowerCase().includes(searchTerm.toLowerCase())
                   )
@@ -149,19 +164,16 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
                       key={order.id}
                       className="bg-white rounded-lg hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden"
                     >
-                      {/* Colored left border */}
                       <div className={`absolute left-0 top-0 bottom-0 w-1 ${getOrderColor(index)}`}></div>
-                      
                       <div className="p-3 pl-5">
                         {(section.name === 'Pending' || section.name === 'All') ? (
-                          // Simplified layout for Pending and All orders
                           <div className="flex items-start space-x-3">
                             <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
                               <User className="w-4 h-4 text-gray-600" />
                             </div>
                             <div className="flex-1" onClick={() => onOrderClick(order)}>
                               <p className="text-sm font-medium text-orange-500 mb-1">{order.name}</p>
-                              <p className="text-xs text-gray-600 mb-1">Alshrouq test 02</p>
+                              <p className="text-xs text-gray-600 mb-1">Noon Minutes</p>
                               <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-red-500 text-white">
                                 Pending Driver Acceptance
                               </span>
@@ -179,7 +191,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
                                   </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end" className="bg-white">
-                                  <DropdownMenuItem 
+                                  <DropdownMenuItem
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       handleCancelOrder(order.id);
@@ -188,34 +200,23 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
                                   >
                                     Cancel
                                   </DropdownMenuItem>
-                                  <DropdownMenuItem 
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleLogOrder(order.id);
-                                    }}
-                                    className="hover:bg-orange-100"
-                                  >
-                                    Log
-                                  </DropdownMenuItem>
                                 </DropdownMenuContent>
                               </DropdownMenu>
                             </div>
                           </div>
                         ) : (
-                          // Default layout for other sections
                           <div onClick={() => onOrderClick(order)}>
                             <div className="flex items-center justify-between mb-2">
                               <span className="font-medium text-sm text-gray-900">{order.id}</span>
                               <div className="flex items-center gap-2">
-                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                  order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
                                   order.status === 'Accepted' ? 'bg-blue-100 text-blue-800' :
-                                  order.status === 'Driver at Pickup' ? 'bg-purple-100 text-purple-800' :
-                                  order.status === 'Picked' ? 'bg-orange-100 text-orange-800' :
-                                  order.status === 'Driver at Dropoff' ? 'bg-indigo-100 text-indigo-800' :
-                                  order.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                                  'bg-gray-100 text-gray-800'
-                                }`}>
+                                    order.status === 'Driver at Pickup' ? 'bg-purple-100 text-purple-800' :
+                                      order.status === 'Picked' ? 'bg-orange-100 text-orange-800' :
+                                        order.status === 'Driver at Dropoff' ? 'bg-indigo-100 text-indigo-800' :
+                                          order.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                                            'bg-gray-100 text-gray-800'
+                                  }`}>
                                   {order.status}
                                 </span>
                                 <DropdownMenu>
@@ -230,7 +231,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
                                     </Button>
                                   </DropdownMenuTrigger>
                                   <DropdownMenuContent align="end" className="bg-white">
-                                    <DropdownMenuItem 
+                                    <DropdownMenuItem
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         handleCancelOrder(order.id);
@@ -239,7 +240,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
                                     >
                                       Cancel
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem 
+                                    <DropdownMenuItem
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         handleLogOrder(order.id);
@@ -260,7 +261,6 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
                       </div>
                     </div>
                   ))}
-                
                 {getOrdersByStatus(section.name === 'All' ? undefined : section.name).length === 0 && (
                   <p className="text-sm text-gray-500 text-center py-4">No orders found</p>
                 )}
@@ -268,9 +268,43 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
             )}
           </div>
         ))}
+
+        {/* Previous Orders */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-100 relative mt-2">
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gray-400 rounded-l-lg"></div>
+          <button
+            onClick={() => toggleSection('Previous')}
+            className="w-full p-3 text-left flex items-center justify-between hover:bg-gray-50 transition-colors rounded-lg pl-4"
+          >
+            <span className="font-medium text-gray-900">
+              Previous Orders ({previousOrders.length})
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 transform transition-transform ${expandedSections['Previous'] ? 'rotate-180' : 'rotate-0'}`}
+            />
+          </button>
+
+          {expandedSections['Previous'] && (
+            <div className="px-4 pb-3 space-y-2 pl-5">
+              {previousOrders.map((prev) => (
+                <div
+                  key={prev.id}
+                  className="bg-gray-50 p-3 rounded-md shadow-sm text-sm text-gray-700"
+                >
+                  <p className="font-medium text-orange-600">{prev.name}</p>
+                  <p className="text-xs">Phone: {prev.phone}</p>
+                  <p className="text-xs">Location: {prev.location}</p>
+                  <p className="text-xs">Client Order ID: {prev.clientOrderId}</p>
+                  <p className="text-xs">Payment: {prev.paymentMethod}</p>
+                  <p className="text-xs">Total: {prev.orderValue}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Alert Dialog for Cancel Confirmation */}
+      {/* Alert Dialog */}
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogContent className="bg-white">
           <AlertDialogHeader>
@@ -280,12 +314,8 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={confirmCancelOrder}>
-              OK
-            </AlertDialogAction>
+            <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmCancelOrder}>OK</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

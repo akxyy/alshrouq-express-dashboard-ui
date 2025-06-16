@@ -26,9 +26,9 @@ const CustomToast = ({ isVisible, onClose, orderId }: CustomToastProps) => {
         <div className="text-xs text-gray-300">
           New order created with id: {orderId}
         </div>
-        <div className="text-xs text-gray-400 mt-1">
+        {/* <div className="text-xs text-gray-400 mt-1">
           via alshrouqdelivery.com
-        </div>
+        </div> */}
       </div>
     </div>
   );

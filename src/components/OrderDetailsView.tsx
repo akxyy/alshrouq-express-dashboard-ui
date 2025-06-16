@@ -38,7 +38,10 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
   ];
 
   return (
-    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white z-40 rounded-lg shadow-xl border w-[520px] max-h-[60vh] flex flex-col" ref={modalRef}>
+    <div
+      className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white z-40 rounded-lg shadow-xl border w-[520px] max-h-[60vh] flex flex-col"
+      ref={modalRef}
+    >
       {/* Content */}
       <div className="flex-1 p-4 overflow-y-auto">
         <div className="space-y-4">
@@ -57,21 +60,19 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
             <div className="relative">
               {/* Connecting Line Background */}
               <div className="absolute top-3 left-3 right-3 h-0.5 bg-gray-300"></div>
-              
+
               <div className="flex justify-between items-start relative">
                 {statusSteps.map((step, index) => (
                   <div key={step.name} className="flex flex-col items-center relative">
                     {/* Circle */}
-                    <div className={`w-6 h-6 rounded-full border-2 relative z-10 bg-white ${
-                      step.completed 
-                        ? 'bg-green-500 border-green-500' 
+                    <div className={`w-6 h-6 rounded-full border-2 relative z-10 bg-white ${step.completed
+                        ? 'bg-green-500 border-green-500'
                         : 'border-gray-300'
-                    }`} />
-                    
+                      }`} />
+
                     {/* Step Name */}
-                    <span className={`text-xs mt-2 text-center leading-tight ${
-                      step.completed ? 'text-gray-900' : 'text-gray-500'
-                    }`} style={{ maxWidth: '70px' }}>
+                    <span className={`text-xs mt-2 text-center leading-tight ${step.completed ? 'text-gray-900' : 'text-gray-500'
+                      }`} style={{ maxWidth: '70px' }}>
                       {step.name}
                     </span>
                   </div>
@@ -105,11 +106,11 @@ const OrderDetailsView = ({ order, onClose }: OrderDetailsViewProps) => {
           </div>
 
           {/* See More */}
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <button className="text-orange-500 text-sm font-medium hover:text-orange-600">
               See more
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
