@@ -46,6 +46,10 @@ const Dashboard = () => {
     setSelectedOrder(order);
   };
 
+  const handleRemoveOrder = (orderId: string) => {
+    setOrders(prev => prev.filter(order => order.id !== orderId));
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <Sidebar />
@@ -55,6 +59,7 @@ const Dashboard = () => {
           orders={orders}
           onNewOrder={() => setIsNewOrderModalOpen(true)}
           onOrderClick={handleOrderClick}
+          onRemoveOrder={handleRemoveOrder}
         />
         
         <div className="flex-1 relative">

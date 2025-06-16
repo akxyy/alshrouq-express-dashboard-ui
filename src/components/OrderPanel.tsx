@@ -25,9 +25,10 @@ interface OrderPanelProps {
   orders: Order[];
   onNewOrder: () => void;
   onOrderClick: (order: Order) => void;
+  onRemoveOrder: (orderId: string) => void;
 }
 
-const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
+const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPanelProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     'All': true,
@@ -56,7 +57,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
   const confirmCancelOrder = () => {
     if (orderToCancel) {
       console.log('Order cancelled:', orderToCancel);
-      // Add your cancel order logic here
+      onRemoveOrder(orderToCancel);
       setIsDialogOpen(false);
       setOrderToCancel(null);
     }
