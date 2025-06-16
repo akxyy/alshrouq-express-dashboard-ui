@@ -160,7 +160,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
                               <User className="w-4 h-4 text-gray-600" />
                             </div>
                             <div className="flex-1" onClick={() => onOrderClick(order)}>
-                              <p className="text-sm font-medium text-orange-500 mb-1">Eissa Hamood</p>
+                              <p className="text-sm font-medium text-orange-500 mb-1">{order.name}</p>
                               <p className="text-xs text-gray-600 mb-1">Alshrouq test 02</p>
                               <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-red-500 text-white">
                                 Pending Driver Acceptance
@@ -252,7 +252,7 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick, onRemoveOrder }: OrderPa
                                 </DropdownMenu>
                               </div>
                             </div>
-                            <p className="text-sm text-orange-500 mb-1">Eissa Hamood</p>
+                            <p className="text-sm text-orange-500 mb-1">{order.name}</p>
                             <p className="text-xs text-gray-500">{order.phone}</p>
                             <p className="text-xs text-gray-500">Value: {order.orderValue}</p>
                           </div>
