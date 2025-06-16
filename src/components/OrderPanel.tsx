@@ -1,9 +1,25 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Order } from './Dashboard';
-import { Plus, Search, ChevronDown, User } from 'lucide-react';
+import { Plus, Search, ChevronDown, User, MoreHorizontal } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 interface OrderPanelProps {
   orders: Order[];
@@ -17,6 +33,8 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
     'All': true,
     'Pending': true,
   });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [orderToCancel, setOrderToCancel] = useState<string | null>(null);
 
   const toggleSection = (section: string) => {
     setExpandedSections(prev => ({
@@ -30,6 +48,30 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
     return orders.filter(order => order.status === status);
   };
 
+  const handleCancelOrder = (orderId: string) => {
+    setOrderToCancel(orderId);
+    setIsDialogOpen(true);
+  };
+
+  const confirmCancelOrder = () => {
+    if (orderToCancel) {
+      console.log('Order cancelled:', orderToCancel);
+      // Add your cancel order logic here
+      setIsDialogOpen(false);
+      setOrderToCancel(null);
+    }
+  };
+
+  const handleLogOrder = (orderId: string) => {
+    console.log('View log for order:', orderId);
+    // Add your log viewing logic here
+  };
+
+  const getOrderColor = (index: number) => {
+    const colors = ['bg-red-500', 'bg-green-500', 'bg-blue-500', 'bg-orange-500', 'bg-purple-500'];
+    return colors[index % colors.length];
+  };
+
   const statusSections = [
     { name: 'All', count: orders.length, color: 'bg-gray-500' },
     { name: 'Pending', count: getOrdersByStatus('Pending').length, color: 'bg-yellow-500' },
@@ -40,11 +82,6 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
     { name: 'Driver at Dropoff', count: getOrdersByStatus('Driver at Dropoff').length, color: 'bg-indigo-500' },
     { name: 'Completed', count: getOrdersByStatus('Completed').length, color: 'bg-green-500' },
   ];
-
-  const getOrderColor = (index: number) => {
-    const colors = ['bg-red-500', 'bg-green-500', 'bg-blue-500', 'bg-orange-500', 'bg-purple-500'];
-    return colors[index % colors.length];
-  };
 
   return (
     <div className="w-96 bg-white flex flex-col">
@@ -108,7 +145,6 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
                   .map((order, index) => (
                     <div
                       key={order.id}
-                      onClick={() => onOrderClick(order)}
                       className="bg-white rounded-lg hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden"
                     >
                       {/* Colored left border */}
@@ -121,35 +157,103 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
                             <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
                               <User className="w-4 h-4 text-gray-600" />
                             </div>
-                            <div className="flex-1">
+                            <div className="flex-1" onClick={() => onOrderClick(order)}>
                               <p className="text-sm font-medium text-gray-900 mb-1">{order.name}</p>
                               <p className="text-xs text-gray-600 mb-1">Alshrouq test 02</p>
                               <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-red-500 text-white">
                                 Pending Driver Acceptance
                               </span>
                             </div>
+                            <div className="flex-shrink-0">
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-8 w-8 p-0 hover:bg-orange-100"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <MoreHorizontal className="h-4 w-4" />
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className="bg-white">
+                                  <DropdownMenuItem 
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleCancelOrder(order.id);
+                                    }}
+                                    className="hover:bg-orange-100"
+                                  >
+                                    Cancel
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem 
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleLogOrder(order.id);
+                                    }}
+                                    className="hover:bg-orange-100"
+                                  >
+                                    Log
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </div>
                           </div>
                         ) : (
                           // Default layout for other sections
-                          <>
+                          <div onClick={() => onOrderClick(order)}>
                             <div className="flex items-center justify-between mb-2">
                               <span className="font-medium text-sm text-gray-900">{order.id}</span>
-                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                                order.status === 'Accepted' ? 'bg-blue-100 text-blue-800' :
-                                order.status === 'Driver at Pickup' ? 'bg-purple-100 text-purple-800' :
-                                order.status === 'Picked' ? 'bg-orange-100 text-orange-800' :
-                                order.status === 'Driver at Dropoff' ? 'bg-indigo-100 text-indigo-800' :
-                                order.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                                'bg-gray-100 text-gray-800'
-                              }`}>
-                                {order.status}
-                              </span>
+                              <div className="flex items-center gap-2">
+                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                  order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                                  order.status === 'Accepted' ? 'bg-blue-100 text-blue-800' :
+                                  order.status === 'Driver at Pickup' ? 'bg-purple-100 text-purple-800' :
+                                  order.status === 'Picked' ? 'bg-orange-100 text-orange-800' :
+                                  order.status === 'Driver at Dropoff' ? 'bg-indigo-100 text-indigo-800' :
+                                  order.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                                  'bg-gray-100 text-gray-800'
+                                }`}>
+                                  {order.status}
+                                </span>
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      className="h-6 w-6 p-0 hover:bg-orange-100"
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <MoreHorizontal className="h-3 w-3" />
+                                    </Button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent align="end" className="bg-white">
+                                    <DropdownMenuItem 
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleCancelOrder(order.id);
+                                      }}
+                                      className="hover:bg-orange-100"
+                                    >
+                                      Cancel
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem 
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleLogOrder(order.id);
+                                      }}
+                                      className="hover:bg-orange-100"
+                                    >
+                                      Log
+                                    </DropdownMenuItem>
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
+                              </div>
                             </div>
                             <p className="text-sm text-gray-600 mb-1">{order.name}</p>
                             <p className="text-xs text-gray-500">{order.phone}</p>
                             <p className="text-xs text-gray-500">Value: {order.orderValue}</p>
-                          </>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -163,6 +267,26 @@ const OrderPanel = ({ orders, onNewOrder, onOrderClick }: OrderPanelProps) => {
           </div>
         ))}
       </div>
+
+      {/* Alert Dialog for Cancel Confirmation */}
+      <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <AlertDialogContent className="bg-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel Order</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure to cancel this order? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={confirmCancelOrder}>
+              OK
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
